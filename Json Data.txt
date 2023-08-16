@@ -1,0 +1,8 @@
+{
+    "title": "Hello Test",
+    "amount": "45",
+    "category" : "Salary",
+    "description": "My income",
+    "date": "10-10-2020"
+    
+}
