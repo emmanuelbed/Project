@@ -10,6 +10,7 @@ import Expenses from "./Components/Expenses/Expenses";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom"; // Import BrowserRouter and related components
 import Login from "./Components/Auth/Login";
 import Signup from "./Components/Auth/Signup";
+import AuthLayout from "./Components/AuthLayout/AuthLayout"; // Import the new layout
 
 function App() {
   const [active, setActive] = useState(1);
@@ -39,16 +40,14 @@ function App() {
         }
       }
     } else {
-      // If not logged in, display Login or Signup
+      // Display buttons for Login and Signup
       return (
-        <Switch>
-          <Route path="/login">
-            <Login onLogin={handleLogin} />
-          </Route>
-          <Route path="/signup">
-            <Signup onSignup={handleLogin} />
-          </Route>
-        </Switch>
+        <div>
+          <button onClick={() => setActive(2)}>Login</button>
+          <button onClick={() => setActive(3)}>Signup</button>
+          {active === 2 && <Login onLogin={handleLogin} />}
+          {active === 3 && <Signup onSignup={handleLogin} />}
+        </div>
       );
     }
   };
