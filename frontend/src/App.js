@@ -8,27 +8,45 @@ import Navigation from "./Components/Navigation/Navigation";
 import Income from "./Components/Incomes/Income";
 import Expenses from "./Components/Expenses/Expenses";
 import { useGlobalContext } from "./context/globalContext";
+import Login from "./Components/Auth/login";
+import Signup from "./Components/Auth/Signup";
 
 function App() {
-  //This is 1 because our ID for the menu items strts from 1
   const [active, setActive] = useState(1);
+  const [isLoggedIn, setIsLoggedIn] = useState(false); // Track login state
 
-  const global = useGlobalContext();
-  console.log(global);
+  const handleLogin = () => {
+    setIsLoggedIn(true);
+  };
+
+  const handleLogout = () => {
+    setIsLoggedIn(false);
+  };
 
   const displayData = () => {
-    switch (active) {
-      case 1:
-        return <Dashboard />;
-      case 2:
-        return <Dashboard />;
-      case 3:
-        return <Income />;
-      case 4:
-        return <Expenses />;
-      default: {
-        return <Dashboard />;
+    if (isLoggedIn) {
+      switch (active) {
+        case 1:
+          return <Dashboard />;
+        case 2:
+          return <Dashboard />;
+        case 3:
+          return <Income />;
+        case 4:
+          return <Expenses />;
+        default: {
+          return <Dashboard />;
+        }
       }
+    } else {
+      // If not logged in, display Login or Signup
+      return (
+        <>
+          <Login onLogin={handleLogin} />
+          {/* OR */}
+          <Signup onSignup={handleLogin} />
+        </>
+      );
     }
   };
 
