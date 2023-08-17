@@ -8,7 +8,7 @@ import Navigation from "./Components/Navigation/Navigation";
 import Income from "./Components/Incomes/Income";
 import Expenses from "./Components/Expenses/Expenses";
 import { useGlobalContext } from "./context/globalContext";
-import Login from "./Components/Auth/login";
+import Login from "./Components/Auth/Login";
 import Signup from "./Components/Auth/Signup";
 
 function App() {
