@@ -7,7 +7,7 @@ import Dashboard from "./Components/Dashboard/Dashboard";
 import Navigation from "./Components/Navigation/Navigation";
 import Income from "./Components/Incomes/Income";
 import Expenses from "./Components/Expenses/Expenses";
-import { useGlobalContext } from "./context/globalContext";
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom"; // Import BrowserRouter and related components
 import Login from "./Components/Auth/Login";
 import Signup from "./Components/Auth/Signup";
 
@@ -41,11 +41,14 @@ function App() {
     } else {
       // If not logged in, display Login or Signup
       return (
-        <>
-          <Login onLogin={handleLogin} />
-          {/* OR */}
-          <Signup onSignup={handleLogin} />
-        </>
+        <Switch>
+          <Route path="/login">
+            <Login onLogin={handleLogin} />
+          </Route>
+          <Route path="/signup">
+            <Signup onSignup={handleLogin} />
+          </Route>
+        </Switch>
       );
     }
   };
@@ -56,13 +59,15 @@ function App() {
   }, []);
 
   return (
-    <AppStyled bg={bg} className="App">
-      {orbMemo}
-      <MainLayout>
-        <Navigation active={active} setActive={setActive} />
-        <main>{displayData()}</main>
-      </MainLayout>
-    </AppStyled>
+    <Router>
+      <AppStyled bg={bg} className="App">
+        {orbMemo}
+        <MainLayout>
+          <Navigation active={active} setActive={setActive} />
+          <main>{displayData()}</main>
+        </MainLayout>
+      </AppStyled>
+    </Router>
   );
 }
 
