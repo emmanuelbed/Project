@@ -1,3 +1,4 @@
+const { response } = require("express");
 const UserSchema = require("../models/UserModel");
 
 exports.signup = async (req, res) => {
