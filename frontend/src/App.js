@@ -10,7 +10,6 @@ import Expenses from "./Components/Expenses/Expenses";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom"; // Import BrowserRouter and related components
 import Login from "./Components/Auth/Login";
 import Signup from "./Components/Auth/Signup";
-import AuthLayout from "./Components/AuthLayout/AuthLayout"; // Import the new layout
 
 function App() {
   const [active, setActive] = useState(1);
@@ -26,33 +25,38 @@ function App() {
 
   const displayData = () => {
     if (isLoggedIn) {
-      switch (active) {
-        case 1:
-          return <Dashboard />;
-        case 2:
-          return <Dashboard />;
-        case 3:
-          return <Income />;
-        case 4:
-          return <Expenses />;
-        default: {
-          return <Dashboard />;
-        }
-      }
+      return (
+        <Switch>
+          <Route exact path="/">
+            <Dashboard />
+          </Route>
+          <Route path="/incomes">
+            <Income />
+          </Route>
+          <Route path="/expenses">
+            <Expenses />
+          </Route>
+        </Switch>
+      );
     } else {
-      // Display buttons for Login and Signup
       return (
         <div>
-          <button onClick={() => setActive(2)}>Login</button>
-          <button onClick={() => setActive(3)}>Signup</button>
-          {active === 2 && <Login onLogin={handleLogin} />}
-          {active === 3 && <Signup onSignup={handleLogin} />}
+          <Switch>
+            <Route path="/login">
+              <Login onLogin={handleLogin} />
+            </Route>
+            <Route path="/signup">
+              <Signup onSignup={handleLogin} />
+            </Route>
+            <Route path="/">
+              <Login onLogin={handleLogin} />
+            </Route>
+          </Switch>
         </div>
       );
     }
   };
 
-  //Ensuring the background Animation does not refresh on click
   const orbMemo = useMemo(() => {
     return <Orb />;
   }, []);
@@ -62,7 +66,7 @@ function App() {
       <AppStyled bg={bg} className="App">
         {orbMemo}
         <MainLayout>
-          <Navigation active={active} setActive={setActive} />
+          {isLoggedIn && <Navigation active={active} setActive={setActive} />}
           <main>{displayData()}</main>
         </MainLayout>
       </AppStyled>
